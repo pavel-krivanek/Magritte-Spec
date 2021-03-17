@@ -1,4 +1,19 @@
 "
+```
+GtkApplication ensureRunning.
+app := SpApplication new.
+conf := SpGtkConfiguration new.
+conf addCSSProviderFromString: '
+.minHeight200 { min-height: 200px }
+' withBlanksCondensed.
+app useBackend: #Gtk with: conf.
+editor := MASpDescriptionEditorPresenter newApplication: app.
+editor description: MAStringDescription new magritteDescription.
+editor openWithSpec.
+```
+
+
+
 report := MASpDescriptionEditorPresenter new.
 report openWithSpec.
 
@@ -62,8 +77,7 @@ MASpDescriptionEditorPresenter >> buildReport [
 
 { #category : #'as yet unclassified' }
 MASpDescriptionEditorPresenter >> defaultDescription [
-	^ "MAContainer new"
-	  MAStringDescription new magritteDescription
+	^ MAContainer new
 ]
 
 { #category : #'as yet unclassified' }
@@ -90,12 +104,16 @@ MASpDescriptionEditorPresenter >> defaultLayout [
 { #category : #'as yet unclassified' }
 MASpDescriptionEditorPresenter >> editDescription: aDescription [
 
-	| p | 
+	| p result closedAsSave | 
+
+	closedAsSave := false.
 	p := aDescription asMASpPresenterIn: self application.
+	p saveAction: [ closedAsSave := true ].
+		
 	p openModalWithSpec.
 	
-	p commit.
-	
+	closedAsSave ifFalse: [ ^ self ].
+
 	report := self buildReport.
 	layout := self defaultLayout.
 
@@ -174,8 +192,6 @@ MASpDescriptionEditorPresenter >> preview [
 	p := anExample asMASpPresenterIn: self application.
 	p openModalWithSpec.
 	
-	p commit.
-	
 	report := self buildReport.
 	layout := self defaultLayout.
 
@@ -188,4 +204,10 @@ MASpDescriptionEditorPresenter >> refresh [
 	report := self buildReport.
 	layout := self defaultLayout.
 
+]
+
+{ #category : #removing }
+MASpDescriptionEditorPresenter >> removeDescription: aDescription [
+	self magritteDescription remove: aDescription.
+	self refresh
 ]

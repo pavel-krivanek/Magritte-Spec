@@ -12,4 +12,15 @@ MASpMultiselectListPresenter >> buildAsEditor [
 		beMultipleSelection;
 		selectItems: self selectedList;
 		yourself.
+		
+	element addStyle: 'minHeight200'.
+	
+	element
+		whenBuiltDo: [ :w | 
+			self application backend class name = #SpecGtkBackend
+				ifTrue: [ | provider context |
+					provider := GtkCssProvider
+						newFromString: '* {min-height: 200px}'.
+					context := w widget styleContext.
+					context addProvider: provider ] ]
 ]

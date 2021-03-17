@@ -1,3 +1,12 @@
+"
+```
+app := SpApplication new.
+app useBackend: #Gtk.
+editor := MASpDescriptionEditorPresenter newApplication: app.
+editor description: MAStringDescription new magritteDescription.
+editor openWithSpec.
+```
+"
 Class {
 	#name : #MASpExampleEditorPresenter,
 	#superclass : #MASpPresenter,
@@ -21,7 +30,27 @@ MASpExampleEditorPresenter >> defaultDescription [
 	self subclassResponsibility
 ]
 
+{ #category : #accessing }
+MASpExampleEditorPresenter >> description [
+
+	^ description
+]
+
+{ #category : #accessing }
+MASpExampleEditorPresenter >> description: anObject [
+
+	description := anObject.
+	self refresh.
+
+]
+
 { #category : #default }
 MASpExampleEditorPresenter >> magritteDescription [
 	^ description ifNil: [ description := self defaultDescription ]
+]
+
+{ #category : #default }
+MASpExampleEditorPresenter >> refresh [ 
+
+
 ]
