@@ -25,7 +25,7 @@ MADescription class >> defaultReportColumnClasses [
 ]
 
 { #category : #'*Magritte-Spec' }
-MADescription >> descriptionMorphClass [
+MADescription >> descriptionPresenterClass [
 	<magritteDescription>
 	^ MASingleOptionDescription new
 		accessor: #presenterClass;
