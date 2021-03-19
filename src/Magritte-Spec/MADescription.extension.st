@@ -25,6 +25,19 @@ MADescription class >> defaultReportColumnClasses [
 ]
 
 { #category : #'*Magritte-Spec' }
+MADescription >> descriptionMorphClass [
+	<magritteDescription>
+	^ MASingleOptionDescription new
+		accessor: #presenterClass;
+		label: 'Presenter Class';
+		priority: 2000;
+		reference: MAClassDescription new;
+		options: self class defaultPresenterClasses;
+		default: self class defaultPresenterClass;
+		yourself
+]
+
+{ #category : #'*Magritte-Spec' }
 MADescription >> presenterClass [
 	^ self propertyAt: #presenterClass ifAbsent: [ self class defaultPresenterClass ]
 ]

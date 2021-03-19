@@ -20,7 +20,7 @@ MASpMultiselectListPresenter >> buildAsEditor [
 			self application backend class name = #SpecGtkBackend
 				ifTrue: [ | provider context |
 					provider := GtkCssProvider
-						newFromString: '* {min-height: 200px}'.
+						newFromString: 'box * {min-height: 200px}'.
 					context := w widget styleContext.
 					context addProvider: provider ] ]
 ]

@@ -34,7 +34,8 @@ Class {
 		'addButton',
 		'editButton',
 		'previewButton',
-		'example'
+		'example',
+		'inspectButton'
 	],
 	#category : #'Magritte-Spec'
 }
@@ -97,7 +98,8 @@ MASpDescriptionEditorPresenter >> defaultLayout [
 			SpBoxLayout newHorizontal 
 				spacing: 10;
 					add: #addButton;
-					add: #editButton;
+					"add: #editButton;"
+					add: #inspectButton;
 					add: #previewButton)  expand: false
 ]
 
@@ -111,8 +113,10 @@ MASpDescriptionEditorPresenter >> editDescription: aDescription [
 	p saveAction: [ closedAsSave := true ].
 		
 	p openModalWithSpec.
-	
+
 	closedAsSave ifFalse: [ ^ self ].
+
+	p commit.
 
 	report := self buildReport.
 	layout := self defaultLayout.
@@ -141,7 +145,6 @@ MASpDescriptionEditorPresenter >> initializePresenters [
 		label: 'Add';
 		action: [ 
 			selectedPresenter save.
-			selected inspect.
 			selected contents isNil
 				ifFalse: [ self addDescription: selected contents new ]  ].
 
@@ -151,14 +154,15 @@ MASpDescriptionEditorPresenter >> initializePresenters [
 			buildEditorFor: description
 			titled: 'Edit Container')].
 	
+	inspectButton := self newButton 
+		label: 'Inspect';
+		action: [ self description inspect ].
+		
 	previewButton := self newButton 
 		label: 'Preview';
 		action: [
-			self preview ].
-	
-	
-			
-	
+			self preview ].		
+					
 	self refresh
 ]
 

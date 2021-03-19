@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'children',
 		'actionButtonsPresenters',
-		'errors'
+		'errors',
+		'showActionButtons'
 	],
 	#category : #'Magritte-Spec'
 }
@@ -15,11 +16,14 @@ MASpContainerPresenter >> buildAsEditor [
 	self children withIndexDo: [ :each :index | 
 		self additionalSubpresentersMap at: ('child', index asString) asSymbol put: each ].
 	
-	actionButtonsPresenters := self magritteActionDescriptions collect: [ :anAction |
-		SpButtonPresenter new 
-			label: anAction label;
-			action: [ anAction performOn: self model  ]
-		 ]
+	actionButtonsPresenters := self showActionButtons 
+		ifFalse: [ OrderedCollection new ]
+		ifTrue: [ 	
+			self magritteActionDescriptions collect: [ :anAction |
+				SpButtonPresenter new 
+					label: anAction label;
+					action: [ anAction performOn: self model  ]
+				 ] ]
 
 ]
 
@@ -147,6 +151,18 @@ MASpContainerPresenter >> setDescription: aDescription [
 	super setDescription: aDescription.
 	self setChildren: self buildChildren.
 	self rebuild.
+]
+
+{ #category : #accessing }
+MASpContainerPresenter >> showActionButtons [
+
+	^ showActionButtons ifNil: [ showActionButtons := false ]
+]
+
+{ #category : #accessing }
+MASpContainerPresenter >> showActionButtons: anObject [
+
+	showActionButtons := anObject
 ]
 
 { #category : #converting }
