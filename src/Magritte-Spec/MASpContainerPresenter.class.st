@@ -103,7 +103,7 @@ MASpContainerPresenter >> rebuild [
 	
 	self children do: [ :each | each rebuild ].
 
-	self magritteDescription isReadonly 
+	self magritteDescription isReadOnly 
 		ifTrue: [ self buildAsView ]
 		ifFalse: [ self buildAsEditor ].
 		

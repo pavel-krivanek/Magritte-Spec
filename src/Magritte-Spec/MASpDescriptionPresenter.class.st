@@ -112,7 +112,7 @@ MASpDescriptionPresenter >> rebuild [
 	
 	self magritteDescription ifNil: [ ^ self ].
 
-	self magritteDescription isReadonly 
+	self magritteDescription isReadOnly 
 		ifTrue: [ self buildAsView ]
 		ifFalse: [ self buildAsEditor ].
 	
