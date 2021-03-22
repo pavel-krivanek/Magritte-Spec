@@ -43,6 +43,11 @@ MADescription >> presenterClass [
 ]
 
 { #category : #'*Magritte-Spec' }
+MADescription >> presenterClass: aClass [
+	^ self propertyAt: #presenterClass put: aClass
+]
+
+{ #category : #'*Magritte-Spec' }
 MADescription >> spReportColumnClass [
 	^ self propertyAt: #spReportColumnClass ifAbsent: [ self class defaultReportColumnClass ]
 ]

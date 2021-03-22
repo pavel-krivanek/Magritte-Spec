@@ -58,7 +58,10 @@ MASpExternalEditorPresenter >> create [
 		withSpecLayout: anEditor retrieveDefaultSpec.
 
 	closedAsSave ifTrue: [
+		anEditor commit.
 		self value: anEditor model ].
+	
+	
 	
 	self buildAsEditor.
 	self redefineLayout
@@ -75,6 +78,24 @@ MASpExternalEditorPresenter >> defaultLayout [
 		add: #referenceLabel;
 		add: #editButton;
 		add: #removeButton
+]
+
+{ #category : #'instance creation' }
+MASpExternalEditorPresenter >> edit [
+
+	| p closedAsSave | 
+
+	closedAsSave := false.
+	p := self value asMASpPresenterIn: self application.
+	p saveAction: [ closedAsSave := true ].
+		
+	p openModalWithSpec.
+
+	closedAsSave ifFalse: [ ^ self ].
+
+	p commit.
+	
+	self rebuild.
 ]
 
 { #category : #'instance creation' }
